@@ -69,6 +69,14 @@ td.missing {
 	color: #999;
 }
 
+td.missing.mandatory {
+	color: red;
+	font-weight: bold;
+}
+td.missing.mandatory::after {
+	content: '(!)';
+}
+
 footer {
 	padding: .3em 1em 1em 1em;
 	text-align: right;
