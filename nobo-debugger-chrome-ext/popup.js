@@ -62,6 +62,12 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			var labelKey = ex[0];
 			var labelValue = unescape(ex[1]);
 			paramValuesByLabelKey[labelKey] = labelValue;
+
+			if (!noboLabels[labelKey]) {
+				noboLabels[labelKey] = {
+					description: 'unknown'
+				}
+			}
 		}
 
 		for (var labelKey in noboLabels) {
@@ -71,15 +77,15 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			var labelValue = paramValuesByLabelKey[labelKey] || 'missing';
 			var title = noboLabels[labelKey].definition || noboLabels[labelKey].comments || '';
 			var line = '<tr title="'+title+'">';
-			line += '<th class="key">' + labelKey + '</th><th>';
-			line += noboLabels[labelKey].description + '&nbsp;';
+			line += '<th class="key">' + labelKey + '</th>';
+			line += '<th class="' + (noboLabels[labelKey].description === 'unknown' ? 'unknown' : '') + '">';
+			line += noboLabels[labelKey].description.replace(/^unknown$/, 'unknown label') + '&nbsp;';
 			line += '</th><td class="'
 				+ (labelValue === 'missing' ? 'missing' : '')
 				+ (noboLabels[labelKey].mandatory ? ' mandatory' : '')
 				+ '">' + labelValue.replace(/^missing$/, 'not filled') + '</td>';
 			line += '</tr>';
 			lines.push(line);
-			
 		}
 
 		html += lines.join('\n');

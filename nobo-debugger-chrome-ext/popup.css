@@ -50,6 +50,10 @@ th {
 	font-weight: normal;
 }
 
+th.unknown {
+	font-style: italic;
+}
+
 th.key {
 	color: #999;
 	padding-right: .24em;
