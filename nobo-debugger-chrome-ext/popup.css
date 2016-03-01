@@ -63,6 +63,12 @@ td {
 	font-weight: bold;
 }
 
+td.missing {
+	font-weight: normal;
+	font-style: italic;
+	color: #999;
+}
+
 footer {
 	padding: .3em 1em 1em 1em;
 	text-align: right;

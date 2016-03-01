@@ -51,27 +51,34 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			continue;
 		}
 		var params = paramstring[1].split('&');
+		var paramValuesByLabelKey = {};
 		var lines = [];
+
 		for (var j = 0; j < params.length; j++) {
 			var ex = params[j].split('=');
 			if (!ex[0].match(/^nb/)) {
 				continue;
 			}
-			var label_key = ex[0];
-			var label_value = unescape(ex[1]);
-			var title = noboLabels[label_key].definition || noboLabels[label_key].comments || '';
+			var labelKey = ex[0];
+			var labelValue = unescape(ex[1]);
+			paramValuesByLabelKey[labelKey] = labelValue;
+		}
+
+		for (var labelKey in noboLabels) {
+			if (!noboLabels.hasOwnProperty(labelKey)) {
+				continue;
+			}
+			var labelValue = paramValuesByLabelKey[labelKey] || 'missing';
+			var title = noboLabels[labelKey].definition || noboLabels[labelKey].comments || '';
 			var line = '<tr title="'+title+'">';
-			line += '<th class="key">' + label_key + '</th><th>';
-			if (noboLabels[label_key]) {
-				line += noboLabels[label_key].description + '&nbsp;';
-			}
-			else {
-				line += label_key;
-			}
-			line += '</th><td>' + label_value + '</td>';
+			line += '<th class="key">' + labelKey + '</th><th>';
+			line += noboLabels[labelKey].description + '&nbsp;';
+			line += '</th><td class="' + (labelValue === 'missing' ? 'missing' : '') + '">' + labelValue.replace(/^missing$/, 'not filled') + '</td>';
 			line += '</tr>';
 			lines.push(line);
+			
 		}
+
 		html += lines.join('\n');
 		html += '</table>';
 	}
