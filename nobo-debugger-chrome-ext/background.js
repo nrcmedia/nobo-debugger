@@ -1,4 +1,4 @@
-noboUrlsPerTabIdAndUrl = [];
+noboUrlPerTabIdAndTabUrl = [];
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function(info) {
@@ -8,8 +8,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 			for (var i in tabs) {
 				if (tabs[i].id == info.tabId) {
 					var key = info.tabId+':'+tabs[i].url;
-					noboUrlsPerTabIdAndUrl[key] = noboUrlsPerTabIdAndUrl[key] || [];
-					noboUrlsPerTabIdAndUrl[key].push(info.url);
+					noboUrlPerTabIdAndTabUrl[key] = info.url;
 				}
 			}
 		});

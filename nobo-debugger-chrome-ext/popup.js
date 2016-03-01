@@ -14,7 +14,7 @@ var noboLabels = {
 	nb_27: { description: "genre", comments: "content description" },
 	nb_28: { description: "event type (article or index)", comments: "article or index page" },
 	nb_29: { description: "media type", comments: "Type of media" },
-	nb_30: { description: "first edition date", comments: "Tfirst time the edition is produced" },
+	nb_30: { description: "first edition date", comments: "first time the edition is produced" },
 }
 
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -25,16 +25,18 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 	var BGPage = chrome.extension.getBackgroundPage();
 	
 	var key = currentTab.id+':'+currentTab.url;
-	var urls = BGPage.noboUrlsPerTabIdAndUrl[key];
+	var urls = [BGPage.noboUrlPerTabIdAndTabUrl[key]];
 
 	if (!urls) {
 		return;
 	}
 
-	document.getElementById('debug').innerHTML = 'NOBO-data for <code>' + currentTab.url + '</code><br><br>';
+	var html = '';
+	html += '<header>NOBO-tracker detected on <code>' + currentTab.url + '</code></header>';
 
 	for (var i = 0; i < urls.length; i++) {
 		var url = urls[i];
+		html += '<table>';
 
 		if (!url) {
 			continue;
@@ -45,24 +47,33 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			continue;
 		}
 		var params = paramstring[1].split('&');
-		for (var j = 0; j < params.length; i++) {
-			var ex = params[i].split('=');
+		var lines = [];
+		for (var j = 0; j < params.length; j++) {
+			var ex = params[j].split('=');
 			if (!ex[0].match(/^nb/)) {
 				continue;
 			}
 			var label_key = ex[0];
 			var label_value = unescape(ex[1]);
-			var line = '';
+			var title = noboLabels[label_key].comments || '';
+			var line = '<tr title="'+title+'">';
+			line += '<th class="key">' + label_key + '</th><th>';
 			if (noboLabels[label_key]) {
-				line += '<b>' + noboLabels[label_key].description + '</b>';
+				line += noboLabels[label_key].description + '&nbsp;';
 			}
 			else {
-				line += '<b>'+label_key + '</b>';
+				line += label_key;
 			}
-			line += ': ' + label_value + '<br>';
-			document.getElementById('debug').innerHTML += line;
+			line += '</th><td>' + label_value + '</td>';
+			line += '</tr>';
+			lines.push(line);
 		}
+		html += lines.join('\n');
+		html += '</table>';
 	}
 
+	document.getElementById('debug').innerHTML = html;
+
+	document.querySelector('[data-version]').innerHTML = 'v' + chrome.app.getDetails().version;
 });
 
