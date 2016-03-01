@@ -7,7 +7,7 @@ var noboLabels = {
 	nb_12: { description: "website name or app name (technical)", comments: "technical domain name or technical app name" },
 	nb_21: { description: "first publication date", comments: "first time content is produced" },
 	nb_22: { description: "paid content flag", comments: "content is paid" },
-	nb_23: { description: "paid user flag", comments: "user is paying fpr this event" },
+	nb_23: { description: "paid user flag", comments: "user is paying for this event" },
 	nb_24: { description: "user login flag", comments: "user is logged in" },
 	nb_25: { description: "media brand", comments: "media brand as perceived by user" },
 	nb_26: { description: "secundair media brand", comments: "sub media brand as perceived by user" },
