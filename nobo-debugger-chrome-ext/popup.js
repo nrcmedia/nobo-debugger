@@ -17,6 +17,37 @@ var noboLabels = {
 	nb_30: { description: "first edition date", comments: "first time the edition is produced", definition: "The first date the edition (replica) has been published)" },
 }
 
+function readableDateFromYYMMDD(dateString, prefix) {
+	if (!prefix) {
+		prefix = '';
+	}
+
+	if (!dateString.match(/^\d{8}$/)) {
+		return '';
+	}
+
+	var dateInput = dateString.replace(/^(\d{4})(\d{2})(\d{2})$/, '$1-$2-$3');
+	var readableDate = ('' + new Date(dateInput)).split(/ \d{2}\:/)[0];
+	return prefix + readableDate;
+}
+
+function readableDateFromTimestamp(ts, prefix) {
+	if (!prefix) {
+		prefix = '';
+	}
+
+	// strip timezone etc. after seconds
+	var readableDate = ('' + new Date(1*ts))
+		.replace(/(\:\d\d) .*$/, '$1')
+		.replace(' 00:00:00', '');
+
+	if (readableDate && readableDate !== 'Invalid Date') {
+		return prefix + readableDate;
+	}
+
+	return '';
+}
+
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 
 	var currentTab = tabs[0];
@@ -83,7 +114,10 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			line += '</th><td class="'
 				+ (labelValue === 'missing' ? 'missing' : '')
 				+ (noboLabels[labelKey].mandatory ? ' mandatory' : '')
-				+ '">' + labelValue.replace(/^missing$/, 'not filled') + '</td>';
+				+ '">' + labelValue.replace(/^missing$/, 'not filled')
+				+ (labelKey === 'nb_21' ? ' <span class="readable-date">' + readableDateFromYYMMDD(labelValue, '=&nbsp;') + '</span>' : '')
+				+ (labelKey === 'nb_30' ? ' <span class="readable-date">' + readableDateFromTimestamp(labelValue, '=&nbsp;') + '</span>' : '')
+				+ '</td>';
 			line += '</tr>';
 			lines.push(line);
 		}
