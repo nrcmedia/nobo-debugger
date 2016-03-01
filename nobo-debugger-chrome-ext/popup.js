@@ -36,6 +36,10 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 
 	for (var i = 0; i < urls.length; i++) {
 		var url = urls[i];
+
+		// show visible url
+		html += '<p class="url-holder"><a target="_blank" href="' + url + '" title="' + url + '">' + url.substring(0, 150) + '&hellip;</a></p>';
+
 		html += '<table>';
 
 		if (!url) {

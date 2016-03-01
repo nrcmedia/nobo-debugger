@@ -8,7 +8,15 @@ body {
 
 header {
 	word-break: break-all;
-	font-size: 1.1em;
+}
+
+.url-holder {
+	word-break: break-all;
+	font-size: .9em;
+}
+
+.url-holder a {
+	outline: none;
 }
 
 #debug { 
@@ -44,7 +52,7 @@ th {
 
 th.key {
 	color: #999;
-	padding-right: .3em;
+	padding-right: .24em;
 }
 
 th.key::after {
