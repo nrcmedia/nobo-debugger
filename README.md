@@ -5,8 +5,9 @@ Browser extension to show comScore/NOBO tracker request values
 
 ## Install in Chrome
 - Clone or download this repo to a local dir
-- Open `chrome://extensions`
-- Click `Load unpacked extension...`
+- Open Chrome, go to **Menu** -> **More Tools** -> **Extensions**
+- Enable **Developer mode** checkbox
+- Click **Load unpacked extension...**
 - Select `nobo-debugger-chrome-ext` dir
 
 ## Usage
