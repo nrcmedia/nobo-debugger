@@ -1,5 +1,5 @@
 
-function readableDateFromYYMMDD(dateString, prefix) {
+function readableDateFromYYYYMMDD(dateString, prefix) {
 	if (!prefix) {
 		prefix = '';
 	}
@@ -66,7 +66,7 @@ function genOutputLines(noboLabels, paramValuesByLabelKey) {
 			+ (labelValue === 'missing' ? 'missing' : '')
 			+ (noboLabels[labelKey].mandatory ? ' mandatory' : '')
 			+ '">' + labelValue.replace(/^missing$/, 'not filled')
-			+ (labelKey === 'nb_21' ? ' <span class="readable-date">' + readableDateFromYYMMDD(labelValue, '=&nbsp;') + '</span>' : '')
+			+ (labelKey === 'nb_21' ? ' <span class="readable-date">' + readableDateFromYYYYMMDD(labelValue, '=&nbsp;') + '</span>' : '')
 			+ (labelKey === 'nb_30' ? ' <span class="readable-date">' + readableDateFromTimestamp(labelValue, '=&nbsp;') + '</span>' : '')
 			+ '</td>';
 		line += '</tr>';
