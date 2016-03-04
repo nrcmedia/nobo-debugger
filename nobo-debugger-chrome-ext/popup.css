@@ -67,6 +67,11 @@ td {
 	font-weight: bold;
 }
 
+/* prevent looong values from stretching out the table */
+td.long {
+	word-break: break-all;
+}
+
 td.missing {
 	font-weight: normal;
 	font-style: italic;

@@ -63,7 +63,8 @@ function genOutputLines(noboLabels, paramValuesByLabelKey) {
 		line += '<th class="' + (noboLabels[labelKey].description === 'unknown' ? 'unknown' : '') + '">';
 		line += noboLabels[labelKey].description.replace(/^unknown$/, 'unknown label') + '&nbsp;';
 		line += '</th><td class="'
-			+ (labelValue === 'missing' ? 'missing' : '')
+			+ ((''+labelValue).length > 23 ? ' long' : '')
+			+ (labelValue === 'missing' ? ' missing' : '')
 			+ (noboLabels[labelKey].mandatory ? ' mandatory' : '')
 			+ '">' + labelValue.replace(/^missing$/, 'not filled')
 			+ (labelKey === 'nb_21' ? ' <span class="readable-date">' + readableDateFromYYYYMMDD(labelValue, '=&nbsp;') + '</span>' : '')
