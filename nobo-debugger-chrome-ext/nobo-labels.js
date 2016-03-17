@@ -86,6 +86,6 @@ var noboLabels = {
 	nb_30: {
 		description: "first edition date",
 		comments: "first time the edition is produced",
-		definition: "The first date the edition (replica) has been published)"
+		definition: "The first date the edition (replica) has been published"
 	},
 };
