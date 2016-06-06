@@ -50,6 +50,13 @@ function extractParamValuesFromUrl(noboUrl) {
 	return paramValuesByLabelKey;
 }
 
+function isInvalid(labelKey, labelValue) {
+	// nb_30 should be YYYYMMDD
+	if (labelKey === 'nb_30' && labelValue && labelValue.length !== 8) {
+		return true;
+	}
+}
+
 function genOutputLines(noboLabels, paramValuesByLabelKey) {
 	var lines = [];
 	for (var labelKey in noboLabels) {
@@ -65,6 +72,7 @@ function genOutputLines(noboLabels, paramValuesByLabelKey) {
 		line += '</th><td class="'
 			+ ((''+labelValue).length > 23 ? ' long' : '')
 			+ (labelValue === 'missing' ? ' missing' : '')
+			+ (isInvalid(labelKey, labelValue) ? ' invalid' : '')
 			+ (noboLabels[labelKey].mandatory ? ' mandatory' : '')
 			+ '">' + labelValue.replace(/^missing$/, 'not filled')
 			+ (labelKey === 'nb_21' ? ' <span class="readable-date">' + readableDateFromYYYYMMDD(labelValue, '=&nbsp;') + '</span>' : '')

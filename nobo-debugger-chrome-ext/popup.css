@@ -78,7 +78,8 @@ td.missing {
 	color: #999;
 }
 
-td.missing.mandatory {
+td.missing.mandatory,
+td.invalid {
 	color: red;
 	font-weight: bold;
 }
