@@ -1,6 +1,6 @@
 {
 	"name": "NMT NOBO Debugger",
-	"version": "0.1",
+	"version": "0.1.1",
 	"manifest_version": 2,
 	"description": "Show comScore/NOBO requests for current page",
 
